@@ -68,7 +68,7 @@
                                     <constraint firstItem="9oc-Ju-eik" firstAttribute="centerY" secondItem="4aC-1S-bsW" secondAttribute="centerY" id="xVt-4m-Bba"/>
                                 </constraints>
                             </view>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgj-nc-lbS">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgj-nc-lbS">
                                 <rect key="frame" x="15" y="295" width="345" height="357"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -76,7 +76,7 @@
                                         <rect key="frame" x="0.0" y="28" width="345" height="176"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CpG-Te-Iet" id="2ss-wK-W66">
-                                            <rect key="frame" x="0.0" y="0.0" width="345" height="175.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="345" height="176"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i5e-GR-MHt">

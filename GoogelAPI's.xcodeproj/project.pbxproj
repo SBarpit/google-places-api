@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E08278520593935007E6E6C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E08278420593935007E6E6C /* Button.swift */; };
+		0E0827A5205956C3007E6E6C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0827A4205956C3007E6E6C /* Model.swift */; };
 		0E2E52412057953800E6B584 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E52402057953800E6B584 /* AppDelegate.swift */; };
 		0E2E52432057953800E6B584 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E52422057953800E6B584 /* ViewController.swift */; };
 		0E2E52462057953800E6B584 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E2E52442057953800E6B584 /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E08278420593935007E6E6C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		0E0827A4205956C3007E6E6C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		0E2E523D2057953800E6B584 /* GoogelAPI's.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GoogelAPI's.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E2E52402057953800E6B584 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E2E52422057953800E6B584 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,11 +65,13 @@
 				0E2E52402057953800E6B584 /* AppDelegate.swift */,
 				0E2E52422057953800E6B584 /* ViewController.swift */,
 				0E2E52522057977C00E6B584 /* Netwook.swift */,
+				0E0827A4205956C3007E6E6C /* Model.swift */,
 				0E2E52442057953800E6B584 /* Main.storyboard */,
 				0E2E52472057953800E6B584 /* Assets.xcassets */,
 				0E2E52492057953800E6B584 /* LaunchScreen.storyboard */,
 				0E2E524C2057953800E6B584 /* Info.plist */,
 				0E2E525A2057FA0F00E6B584 /* ShowCell.swift */,
+				0E08278420593935007E6E6C /* Button.swift */,
 			);
 			path = "GoogelAPI's";
 			sourceTree = "<group>";
@@ -142,8 +148,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E08278520593935007E6E6C /* Button.swift in Sources */,
 				0E2E52432057953800E6B584 /* ViewController.swift in Sources */,
 				0E2E525B2057FA0F00E6B584 /* ShowCell.swift in Sources */,
+				0E0827A5205956C3007E6E6C /* Model.swift in Sources */,
 				0E2E52532057977C00E6B584 /* Netwook.swift in Sources */,
 				0E2E52412057953800E6B584 /* AppDelegate.swift in Sources */,
 			);
