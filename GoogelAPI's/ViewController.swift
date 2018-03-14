@@ -86,6 +86,15 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
         cell?.imageView?.downloadedFrom(link: imageURLS[indexPath.row])
         return cell!
     }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        let transform = CATransform3DTranslate(CATransform3DIdentity, -250, 20, 5)
+        cell.layer.transform = transform
+        UIView.animate(withDuration:0.7) {
+            cell.alpha = 1.0
+            cell.layer.transform = CATransform3DIdentity
+        }
+    }
 }
 
 // MARK: Network Controller,  to make GET request and store data by parsing it into JSON
@@ -143,7 +152,7 @@ extension ViewController{
     // MARK: Send request to server
     
     func getRequest(_ search:String) -> NSMutableURLRequest{
-        return NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(search)&key=AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM")! as URL,
+        return NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(search)&key=AIzaSyBatToiKxdUkBLl_pB-COLqUUeEH3UljoY")! as URL,
                                    cachePolicy: .useProtocolCachePolicy,
                                    timeoutInterval: 10.0)
     }
