@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     var address:[String]=[]
     var rating:[NSNumber]=[]
     var imageURLS:[String]=[]
-    
+    //
     
     let headers = [
         "Cache-Control": "no-cache",
