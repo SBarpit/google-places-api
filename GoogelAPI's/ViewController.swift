@@ -11,24 +11,31 @@ import Foundation
 
 class ViewController: UIViewController {
     
+    
+    //MARK: IBOutlets
+    
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBox: UITextField!
     
+    //MARK: Arrays to store data
     
     var name:[String]=[]
     var address:[String]=[]
     var rating:[NSNumber]=[]
     var imageURLS:[String]=[]
-    //
+    
     
     let headers = [
         "Cache-Control": "no-cache",
         "Postman-Token": "f332f7b2-b335-447e-b0a7-fbcc75f69701"
     ]
     
+    //MARK: API key
+    
     fileprivate var key = "AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM"
     
+    //IBAction for search items
     
     @IBAction func searchButton(_ sender: UIButton) {
         self.loadViews()
@@ -62,6 +69,8 @@ class ViewController: UIViewController {
 }
 
 
+//MARK: Extension for tableview delegate nad datasource methods
+
 extension ViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.name.count
@@ -79,8 +88,11 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     }
 }
 
+// MARK: Network Controller,  to make GET request and store data by parsing it into JSON
 
 extension ViewController{
+    
+    // MARK: Method to get responce from the request
     
     func getResponce(_ Search:String){
         let sv = UIViewController.displaySpinner(onView: self.view)
@@ -128,6 +140,8 @@ extension ViewController{
         
     }
     
+    // MARK: Send request to server
+    
     func getRequest(_ search:String) -> NSMutableURLRequest{
         return NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(search)&key=AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM")! as URL,
                                    cachePolicy: .useProtocolCachePolicy,
@@ -136,6 +150,7 @@ extension ViewController{
 }
 
 
+// MARK: Add a loader for wating period
 
 extension UIViewController {
     class func displaySpinner(onView : UIView) -> UIView {
@@ -159,6 +174,8 @@ extension UIViewController {
         }
     }
 }
+
+// MARK: Extension to download images from the url
 
 extension UIImageView {
     func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
