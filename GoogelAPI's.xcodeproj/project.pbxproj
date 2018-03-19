@@ -16,6 +16,7 @@
 		0E2E524B2057953800E6B584 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E2E52492057953800E6B584 /* LaunchScreen.storyboard */; };
 		0E2E52532057977C00E6B584 /* Netwook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E52522057977C00E6B584 /* Netwook.swift */; };
 		0E2E525B2057FA0F00E6B584 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E525A2057FA0F00E6B584 /* ShowCell.swift */; };
+		0E465CBC205FBECC003152A4 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E465CBB205FBECC003152A4 /* Modal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0E2E524C2057953800E6B584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E2E52522057977C00E6B584 /* Netwook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Netwook.swift; sourceTree = "<group>"; };
 		0E2E525A2057FA0F00E6B584 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
+		0E465CBB205FBECC003152A4 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				0E2E524C2057953800E6B584 /* Info.plist */,
 				0E2E525A2057FA0F00E6B584 /* ShowCell.swift */,
 				0E08278420593935007E6E6C /* Button.swift */,
+				0E465CBB205FBECC003152A4 /* Modal.swift */,
 			);
 			path = "GoogelAPI's";
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 				0E2E52432057953800E6B584 /* ViewController.swift in Sources */,
 				0E2E525B2057FA0F00E6B584 /* ShowCell.swift in Sources */,
 				0E0827A5205956C3007E6E6C /* Model.swift in Sources */,
+				0E465CBC205FBECC003152A4 /* Modal.swift in Sources */,
 				0E2E52532057977C00E6B584 /* Netwook.swift in Sources */,
 				0E2E52412057953800E6B584 /* AppDelegate.swift in Sources */,
 			);

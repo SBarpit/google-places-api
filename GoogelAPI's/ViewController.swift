@@ -9,8 +9,11 @@
 import UIKit
 import Foundation
 
+
 class ViewController: UIViewController {
     
+    
+    var mdata:Places!
     
     //MARK: IBOutlets
     
@@ -18,16 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBox: UITextField!
     
-    //MARK: Arrays to store data
-    
-    var desc:[String] = []
-    let pickerView = UIPickerView()
-
-    var name:[String]=[]
-    var address:[String]=[]
-    var rating:[NSNumber]=[]
-    var imageURLS:[String]=[]
-    
+    var network:Network!
     
     let headers = [
         "Cache-Control": "no-cache",
@@ -45,6 +39,8 @@ class ViewController: UIViewController {
         searchBox.resignFirstResponder()
         let querry = self.searchBox.text
         let newString = querry?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+//        network = Network()
+//        network.vc = self
         self.getResponce(newString!)
         
     }
@@ -53,10 +49,6 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         self.loadViews()
-        pickerView.delegate = self
-        searchBox.inputView = pickerView
-        searchBox.addTarget(self, action: #selector(responcePredict), for: .editingChanged)
-        self.pickerView.reloadAllComponents()
         
     }
     
@@ -76,10 +68,7 @@ class ViewController: UIViewController {
         self.shadowView.layer.masksToBounds = false
     }
     
-    @objc func responcePredict(){
-        desc = []
-        getResponcePredict(searchBox.text!)
-    }
+   
 }
 
 
@@ -89,7 +78,13 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.name.count
+        if mdata == nil {
+            return 0
+        }else{
+            print(self.mdata.results.count)
+             return self.mdata.results.count
+        }
+       
     }
     
     
@@ -101,9 +96,9 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShowCell", for: indexPath) as? ShowCell
         
-        cell?.nameLB.text = self.name[indexPath.row]
+        cell?.nameLB.text = self.mdata.results[indexPath.row].name
         
-        if rating.count < name.count {
+        if self.mdata.results.count < indexPath.row {
             
             cell?.ratingLB.isHidden = true
             
@@ -111,13 +106,16 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
             
             cell?.ratingLB.isHidden = false
             
-            cell?.ratingLB.text = "\(self.rating[indexPath.row]) ⭐"
+            cell?.ratingLB.text = "\(self.mdata.results[indexPath.row].rating) ⭐"
             
         }
         
-        cell?.vicinityLB.text = self.address[indexPath.row]
+        cell?.vicinityLB.text = self.mdata.results[indexPath.row].formatted_address
         
-        cell?.imageView?.downloadedFrom(link: imageURLS[indexPath.row])
+        let ref = self.mdata.results[indexPath.row].photos[0].photo_reference
+        let width = self.mdata.results[indexPath.row].photos[0].width
+        let url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=134&photoreference=\(ref)&key=AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM"
+        cell?.imageView?.downloadedFrom(link: url)
         return cell!
     }
     
@@ -138,79 +136,46 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
 // MARK: Network Controller,  to make GET request and store data by parsing it into JSON
 
 extension ViewController{
-    
+
     // MARK: Method to get responce from the request
-    
+
     func getResponce(_ Search:String){
-        
+
         let sv = UIViewController.displaySpinner(onView: self.view)
-        
+
         let request = getRequest(Search)
-        
+
         request.httpMethod = "GET"
-        
+
         request.allHTTPHeaderFields = headers
-        
+
         URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            
+
             if (error != nil) {
-                
+
                 print(error as Any)
-                
-            } else {
-                
-                let httpResponse = response as? HTTPURLResponse
-                
-                print(httpResponse as Any)
-                
-            }
-            
-            guard let data = data else {return}
-            
-            let v = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
-            
-            print(v)
-            
-            let results = v["results"] as! [[String:Any]]
-            
-            let status = v["status"] as! String
-            
-            if status != "ZERO_RESULTS"{
-                
-                for result in results{
-                    
-                    for(key,value) in result
-                    {
-                        if key=="name"
-                        {
-                            self.name.append(value as! String)
-                        }
-                        else if key == "rating"
-                        {
-                            self.rating.append(value as! NSNumber)
-                        }
-                        else if key=="formatted_address"
-                        {
-                            self.address.append(value as! String)
-                        }
-                        else if key == "icon"
-                        {
-                            self.imageURLS.append(value as! String)
-                        }
-                    }
-                }
             }else{
-                self.displayAlertMessage("No results found ! 😅")
+                do {
+                    self.mdata =  try JSONDecoder().decode(Places.self, from: data!)
+                    print(self.mdata.results.count)
+                }
+                catch {
+                    print("Error")
+                }
+
             }
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                 self.tableView.reloadData()
+            }
+
             UIViewController.removeSpinner(spinner: sv)
-            
+
         }).resume()
-        
+
     }
-    
-    // MARK: Send request to server
-    
+
+// MARK: Send request to server
+
     func getRequest(_ search:String) -> NSMutableURLRequest{
         return NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(search)&key=AIzaSyBatToiKxdUkBLl_pB-COLqUUeEH3UljoY")! as URL,
                                    cachePolicy: .useProtocolCachePolicy,
@@ -222,6 +187,7 @@ extension ViewController{
 // MARK: Add a loader for wating period
 
 extension UIViewController {
+    
     class func displaySpinner(onView : UIView) -> UIView {
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
@@ -299,10 +265,6 @@ extension ViewController:UITextFieldDelegate{
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.name = []
-        self.address = []
-        self.rating = []
-        self.imageURLS = []
         tableView.reloadData()
     }
     
@@ -314,86 +276,6 @@ extension ViewController:UITextFieldDelegate{
         alertController.addAction(OKAction)
         UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
-}
-
-extension ViewController:UIPickerViewDataSource, UIPickerViewDelegate{
-    
-    func getResponcePredict(_ Search:String){
-        
-        let request = getRequestPredict(Search)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-        
-        URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            
-            if (error != nil) {
-                
-                print(error as Any)
-                
-            } else {
-                
-                let httpResponse = response as? HTTPURLResponse
-                
-                print(httpResponse as Any)
-                
-            }
-            
-            guard let data = data else {return}
-            
-            let v = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
-            
-            let results = v["predictions"] as! [[String:Any]]
-            
-            let status = v["status"] as! String
-            
-            if status != "ZERO_RESULTS"{
-                
-                for result in results{
-                    
-                    for(key,value) in result
-                    {
-                        if key=="description"
-                        {
-                            self.desc.append(value as! String)
-                            self.pickerView.reloadAllComponents()
-                        }
-                        
-                    }
-                }
-                
-            }else{
-                print("No results found ! 😅")
-            }
-            
-        }).resume()
-        
-    }
-    
-    func getRequestPredict(_ search:String) -> NSMutableURLRequest{
-        print(search)
-        let newString = search.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
-        return NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=\(newString)&types=geocode&language=en&key=AIzaSyBatToiKxdUkBLl_pB-COLqUUeEH3UljoY")! as URL,
-                                   cachePolicy: .useProtocolCachePolicy,
-                                   timeoutInterval: 10.0)
-    }
-    
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return desc.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return desc[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        searchBox.text = desc[row]
-    }
-    
 }
 
 
