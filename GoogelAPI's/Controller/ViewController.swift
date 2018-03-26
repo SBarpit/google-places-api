@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBox: UITextField!
     
-    var network:Network!
+ 
     
     let headers = [
         "Cache-Control": "no-cache",
@@ -39,8 +39,6 @@ class ViewController: UIViewController {
         searchBox.resignFirstResponder()
         let querry = self.searchBox.text
         let newString = querry?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
-//        network = Network()
-//        network.vc = self
         self.getResponce(newString!)
         
     }
@@ -113,7 +111,6 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
         cell?.vicinityLB.text = self.mdata.results[indexPath.row].formatted_address
         
         let ref = self.mdata.results[indexPath.row].photos[0].photo_reference
-        let width = self.mdata.results[indexPath.row].photos[0].width
         let url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=134&photoreference=\(ref)&key=AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM"
         cell?.imageView?.downloadedFrom(link: url)
         return cell!
@@ -238,6 +235,7 @@ extension UIImageView {
 }
 
 
+// MARK: Animation on Button
 
 extension UIButton{
     
@@ -253,12 +251,14 @@ extension UIButton{
     }
 }
 
-
+// MARK: TextField Delegates method
 
 extension ViewController:UITextFieldDelegate{
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if (self.searchBox.text?.isEmpty)! {
+            
+            //MARK: validations
             self.displayAlertMessage("Can't be empty")
             return
         }
@@ -267,6 +267,12 @@ extension ViewController:UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         tableView.reloadData()
     }
+    
+}
+
+// MARK: Methdod to show pop-up alert alert message
+
+extension ViewController{
     
     func displayAlertMessage(_ messageToDisplay: String)
     {

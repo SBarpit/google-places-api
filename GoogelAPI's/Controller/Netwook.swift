@@ -2,7 +2,7 @@
 //  Netwook.swift
 //  GoogelAPI's
 //
-//  Created by Appinventiv Mac on 13/03/18.
+//  Created by Arpit Srivastava on 13/03/18.
 //  Copyright © 2018 Appinventiv Mac. All rights reserved.
 //
 
@@ -16,14 +16,14 @@ class Network {
     var mdata:Places?
     var vc:ViewController!
     
-     let headers = [
+    let headers = [
         "Cache-Control": "no-cache",
         "Postman-Token": "f332f7b2-b335-447e-b0a7-fbcc75f69701"
     ]
-     fileprivate var key = "AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM"
-     func getResponce(_ Search:String){
+    
+    fileprivate var key = "AIzaSyBXSZOOoR3kNLHEy1maOLnJzrUoGZRgAIM"
+    func getResponce(_ Search:String){
         
-      
         
         let request = getRequest(Search)
         
@@ -39,7 +39,6 @@ class Network {
             }else{
                 do {
                     self.mdata =  try JSONDecoder().decode(Places.self, from: data!)
-                    print(self.mdata?.results.count)
                 }
                 catch {
                     print("Error")
